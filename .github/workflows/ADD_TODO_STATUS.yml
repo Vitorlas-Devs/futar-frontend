@@ -1,7 +1,6 @@
 name: Add ✴️Todo
 
 on:
-  workflow_call:
   issues:
     types: [milestoned]
 
