@@ -1,13 +1,14 @@
-name: Add Backlog Status
+name: Move assigned card
 on:
   issues:
-    types: [opened]
+    types:
+      - assigned
 jobs:
-  Add_New_Issue_To_Project:
+  move-assigned-card:
     runs-on: ubuntu-latest
     steps:
-    - uses: konradpabjan/actions-add-new-issue-to-column@v1.1
-      with:
-        action-token: "${{ secrets.ACCESS_TOKEN }}"
-        project-url: "https://github.com/orgs/14A-A-Lyedlik-Devs/projects/3"
-        column-name: "Status"
+      - uses: alex-page/github-project-automation-plus@5bcba1c1c091a222584d10913e5c060d32c44044
+        with:
+          project: Project Futár
+          column: 🅿️In Progress
+          repo-token: "${{ secrets.ACCESS_TOKEN }}"
