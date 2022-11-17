@@ -2,7 +2,7 @@ name: Create and/or Update edited issues to my project
 
 on:
   issues:
-    types: [opened, reopened]
+    types: [milestoned]
 
 jobs:
   create-update-project:
@@ -21,4 +21,4 @@ jobs:
           github-token: ${{ secrets.ACCESS_TOKEN }}
           item-id: ${{ steps.add-project.outputs.itemId }} # Use the item-id output of the previous step
           field-keys: Status
-          field-values: 🅾️Backlog
+          field-values: ✴️Todo
