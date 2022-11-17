@@ -1,7 +1,6 @@
 name: Add 🅿️In Progress
 
 on:
-  workflow_call:
   issues:
     types: [assigned]
 
