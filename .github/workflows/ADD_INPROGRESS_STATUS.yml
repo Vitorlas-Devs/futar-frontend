@@ -1,4 +1,4 @@
-name: Create and/or Update edited issues to my project
+name: Add 🅿️In Progress
 
 on:
   workflow_call:
