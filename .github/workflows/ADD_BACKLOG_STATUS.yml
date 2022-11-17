@@ -10,4 +10,4 @@ jobs:
       with:
         action-token: "${{ secrets.ACCESS_TOKEN }}"
         project-url: "https://github.com/orgs/14A-A-Lyedlik-Devs/projects/3"
-        column-name: "🅾️Backlog"
+        column-name: "Status"
