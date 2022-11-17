@@ -1,14 +1,25 @@
-name: Move assigned card
+name: Create and/or Update edited issues to my project
+
 on:
   issues:
     types:
-      - assigned
+      - opened
+
 jobs:
-  move-assigned-card:
+  create-update-project:
+    name: Create/update project issue
     runs-on: ubuntu-latest
     steps:
-      - uses: alex-page/github-project-automation-plus@5bcba1c1c091a222584d10913e5c060d32c44044
+      - uses: actions/checkout@v3v
+      - uses: actions/add-to-project@v0.3.0 # This adds the issue to the project
         with:
-          project: Project Futár
-          column: 🅿️In Progress
-          repo-token: "${{ secrets.ACCESS_TOKEN }}"
+          project-url: https://github.com/orgs/14A-A-Lyedlik-Devs/projects/3/
+          github-token: ${{ secrets.ACCESS_TOKEN }}
+        id: add-project
+      - uses: titoportas/update-project-fields@v0.1.0
+        with:
+          project-url: https://github.com/orgs/14A-A-Lyedlik-Devs/projects/3/
+          github-token: ${{ secrets.ACCESS_TOKEN }}
+          item-id: ${{ steps.add-project.outputs.itemId }} # Use the item-id output of the previous step
+          field-keys: Status
+          field-values: 🅾️Backlog
