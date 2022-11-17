@@ -2,15 +2,14 @@ name: Create and/or Update edited issues to my project
 
 on:
   issues:
-    types:
-      - opened
+    types: [opened, reopened]
 
 jobs:
   create-update-project:
     name: Create/update project issue
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3v
+      - uses: actions/checkout@v3
       - uses: actions/add-to-project@v0.3.0 # This adds the issue to the project
         with:
           project-url: https://github.com/orgs/14A-A-Lyedlik-Devs/projects/3/
