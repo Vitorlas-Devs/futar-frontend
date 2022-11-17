@@ -1,6 +1,7 @@
 name: Create and/or Update edited issues to my project
 
 on:
+  workflow_call:
   issues:
     types: [milestoned]
 
