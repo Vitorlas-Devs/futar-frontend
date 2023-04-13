@@ -1,0 +1,9 @@
+node_modules
+coverage
+.DS_Store
+dist
+dist-ssr
+*.local
+.idea
+package-lock.json
+.env

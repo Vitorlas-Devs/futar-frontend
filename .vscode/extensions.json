@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "christian-kohler.path-intellisense",
+    "antfu.iconify",
+    "formulahendry.auto-rename-tag",
+    "christian-kohler.npm-intellisense",
+    "codecoaching.quasar-docs",
+    "vue.volar",
+    "formulahendry.auto-close-tag",
+    "lokalise.i18n-ally"
+  ]
+}

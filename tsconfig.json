@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "esnext",
+    "useDefineForClassFields": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": ["esnext", "dom"],
+    "types": [
+      "node",
+      "vite/client",
+      "vitest",
+      "vitest/globals",
+      "@intlify/unplugin-vue-i18n/messages",
+      "pinia-plugin-persist"
+    ],
+    "paths": {
+      "src/*": ["src/*"],
+      "/src/*": ["src/*"],
+      "~/*": ["src/*"]
+    }
+  },
+  "exclude": ["dist", "node_modules"]
+}
