@@ -48,6 +48,7 @@
       usersStore.loginUser({
         email: r.email,
         password: r.password,
+        roles: ["user"],
       });
     } else {
       usersStore.logOut();
