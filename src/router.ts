@@ -2,21 +2,13 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import AboutView from "./views/AboutView.vue";
 import AccountView from "./views/AccountView.vue";
 import QTableView from "./views/QTableView.vue";
-import ExamplesView from "./views/ExamplesView.vue";
-import GridView from "./views/GridView.vue";
 import StartPageView from "./views/StartPageView.vue";
-import HelpView from "./views/HelpView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "StartPage",
     component: StartPageView,
-  },
-  {
-    path: "/examples",
-    name: "examples",
-    component: ExamplesView,
   },
   {
     path: "/account",
@@ -29,19 +21,9 @@ const routes: Array<RouteRecordRaw> = [
     component: QTableView,
   },
   {
-    path: "/grid",
-    name: "grid",
-    component: GridView,
-  },
-  {
     path: "/about",
     name: "about",
     component: AboutView,
-  },
-  {
-    path: "/qhelp",
-    name: "qhelp",
-    component: HelpView,
   },
 ];
 const router = createRouter({

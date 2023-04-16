@@ -16,14 +16,6 @@
         </a>
       </h2>
     </div>
-    <q-banner class="bg-primary text-white">Primary</q-banner>
-    <q-banner class="bg-secondary text-white">Secondary</q-banner>
-    <q-banner class="bg-accent text-white">Accent</q-banner>
-    <q-banner class="bg-dark text-white">Dark</q-banner>
-    <q-banner class="bg-positive text-white">Positive</q-banner>
-    <q-banner class="bg-negative text-white">Negative</q-banner>
-    <q-banner class="bg-info text-white">Info</q-banner>
-    <q-banner class="bg-warning text-white">Warning</q-banner>
   </q-page>
 </template>
 

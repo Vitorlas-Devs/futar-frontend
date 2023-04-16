@@ -36,22 +36,6 @@
         separator: false,
       },
       {
-        icon: "mdi-soccer",
-        text: t("examples"),
-        name: "examples",
-        route: "/examples",
-        disabled: false,
-        separator: false,
-      },
-      {
-        icon: "mdi-grid",
-        text: t("gridDemo"),
-        name: "gridDemo",
-        route: "/grid",
-        disabled: false,
-        separator: false,
-      },
-      {
         icon: "mdi-account",
         text: t("account"),
         name: "account",
@@ -65,14 +49,6 @@
         name: "about",
         route: "/about",
         disabled: false,
-        separator: false,
-      },
-      {
-        icon: "mdi-lifebuoy",
-        text: "q-help",
-        name: "qhelp",
-        route: "/qhelp",
-        disabled: false,
         separator: true,
       },
     ];
@@ -81,41 +57,17 @@
   const links = ref([
     {
       icon: "mdi-github",
-      text: "GitHub repo",
+      text: "Frontend",
       name: "",
-      link: "https://github.com/nitslaszlo/jedlik-vite-quasar-template-minimal-dialogs",
+      link: "https://github.com/14A-A-Lyedlik-Devs/futar-frontend",
       disabled: false,
       separator: false,
     },
     {
-      icon: "mdi-language-typescript",
-      text: "TypeScript",
+      icon: "mdi-github",
+      text: "Backend",
       name: "",
-      link: "https://www.typescriptlang.org/",
-      disabled: false,
-      separator: false,
-    },
-    {
-      icon: "mdi-vuejs",
-      text: "Vue.js",
-      name: "",
-      link: "https://vuejs.org/",
-      disabled: false,
-      separator: false,
-    },
-    {
-      icon: "mdi-tire",
-      text: "Quasar",
-      name: "",
-      link: "https://quasar.dev/",
-      disabled: false,
-      separator: false,
-    },
-    {
-      icon: "mdi-fruit-pineapple",
-      text: "Pinia",
-      name: "",
-      link: "https://pinia.vuejs.org/introduction.html",
+      link: "https://github.com/14A-A-Lyedlik-Devs/futar-backend",
       disabled: false,
       separator: false,
     },
@@ -136,7 +88,7 @@
             <q-avatar>
               <img src="./assets/Jedlik_small.png" />
             </q-avatar>
-            Jedlik
+            Futár
           </q-toolbar-title>
           <q-btn v-if="usersStore.loggedUser" round>
             <q-avatar size="38px">
@@ -184,7 +136,7 @@
           <!-- links: -->
           <q-list>
             <template v-for="(linkItem, index) in links" :key="index">
-              <q-item clickable :href="linkItem.link">
+              <q-item clickable :href="linkItem.link" target="_blank">
                 <q-item-section avatar>
                   <q-icon :name="linkItem.icon" />
                 </q-item-section>
@@ -201,7 +153,7 @@
       <q-footer elevated reveal>
         <q-toolbar>
           <q-toolbar-title class="text-center my-title">
-            Vite-Quasar minimal {{ $t("template") }} 2022 -
+            Futár Frontend 2023 -
             {{ usersStore.loggedUser ? usersStore.loggedUser?.name : $t("arentLoggedIn") }}
           </q-toolbar-title>
         </q-toolbar>
