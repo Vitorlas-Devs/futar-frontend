@@ -1,78 +1,80 @@
 <script setup lang="ts">
-  import { computed, reactive, watchEffect } from "vue";
-  import { usePostsStore } from "../store/postsStore";
-  import { useUsersStore } from "../store/usersStore";
-  import { useAppStore } from "../store/appStore";
-  import LoginHelper from "./LoginHelper";
-  import ValidPassword from "./ValidPassword.vue";
-  import { googleTokenLogin, CallbackTypes } from "vue3-google-login";
+import { computed, reactive, watchEffect } from 'vue'
+import type { CallbackTypes } from 'vue3-google-login'
+import { googleTokenLogin } from 'vue3-google-login'
+import { usePostsStore } from '../store/postsStore'
+import { useUsersStore } from '../store/usersStore'
+import { useAppStore } from '../store/appStore'
+import LoginHelper from './LoginHelper'
+import ValidPassword from './ValidPassword.vue'
 
-  interface IProps {
-    email?: string;
-    password?: string;
-    showDialog?: boolean;
+interface IProps {
+  email?: string
+  password?: string
+  showDialog?: boolean
+}
+const props = withDefaults(defineProps<IProps>(), {
+  email: 'student001@jedlik.eu', // set value of optional prop
+  password: 'student001',
+})
+
+const usersStore = useUsersStore()
+const postsStore = usePostsStore()
+const appStore = useAppStore()
+
+const anyLoggedUser = computed(() => (!!usersStore.getLoggedUser))
+
+interface IReactiveData {
+  email: string
+  password: string
+  password_ok: string | boolean
+  isPwd: boolean
+}
+
+const r = reactive<IReactiveData>({
+  email: props.email,
+  password: props.password,
+  password_ok: true,
+  isPwd: false,
+})
+
+watchEffect(() => (r.email = usersStore.loggedUser ? (usersStore.loggedUser.email as string) : props.email))
+
+function isValidEmail(email: string): boolean | string {
+  return LoginHelper.IsValidEmail(email)
+}
+
+function LogInOut() {
+  if (!anyLoggedUser.value) {
+    usersStore.loginUser({
+      email: r.email,
+      password: r.password,
+      roles: ['user'],
+    })
   }
-  const props = withDefaults(defineProps<IProps>(), {
-    email: "student001@jedlik.eu", // set value of optional prop
-    password: "student001",
-  });
-
-  const usersStore = useUsersStore();
-  const postsStore = usePostsStore();
-  const appStore = useAppStore();
-
-  const anyLoggedUser = computed(() => (usersStore.getLoggedUser ? true : false));
-
-  interface IReactiveData {
-    email: string;
-    password: string;
-    password_ok: string | boolean;
-    isPwd: boolean;
+  else {
+    usersStore.logOut()
+    postsStore.posts = []
   }
+}
 
-  const r = reactive<IReactiveData>({
-    email: props.email,
-    password: props.password,
-    password_ok: true,
-    isPwd: false,
-  });
+function dialogShow() {
+  if (usersStore.loggedUser)
+    r.email = usersStore.loggedUser.email as string
 
-  watchEffect(() => (r.email = usersStore.loggedUser ? (usersStore.loggedUser.email as string) : props.email));
+  else
+    r.email = props.email
+}
 
-  function isValidEmail(email: string): boolean | string {
-    return LoginHelper.IsValidEmail(email);
-  }
+function isValidPassword(result: string | boolean): void {
+  r.password_ok = result
+}
 
-  function LogInOut() {
-    if (!anyLoggedUser.value) {
-      usersStore.loginUser({
-        email: r.email,
-        password: r.password,
-        roles: ["user"],
-      });
-    } else {
-      usersStore.logOut();
-      postsStore.posts = [];
-    }
-  }
-
-  function dialogShow() {
-    if (usersStore.loggedUser) {
-      r.email = usersStore.loggedUser.email as string;
-    } else {
-      r.email = props.email;
-    }
-  }
-
-  function isValidPassword(result: string | boolean): void {
-    r.password_ok = result;
-  }
-
-  function loginRegisterGoogle() {
-    googleTokenLogin().then((response: CallbackTypes.TokenPopupResponse) => {
-      usersStore.loginRegisterWithGoogle(response.access_token);
-    });
-  }
+function loginRegisterGoogle() {
+  googleTokenLogin().then((response: CallbackTypes.TokenPopupResponse) => {
+    usersStore.loginRegisterWithGoogle(response.access_token)
+  })
+}
 </script>
 
 <template>
@@ -88,7 +90,7 @@
                 :disable="anyLoggedUser"
                 filled
                 label="E-mail address"
-                :rules="[(v) => (v != null && v != '') || 'Please fill in!', isValidEmail]"
+                :rules="[(v) => (v != null && v !== '') || 'Please fill in!', isValidEmail]"
                 type="text"
               />
             </q-card-section>

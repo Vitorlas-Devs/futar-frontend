@@ -1,81 +1,80 @@
 <script setup lang="ts">
-  import { useI18n } from "vue-i18n";
-  import router from "src/router";
-  import { useUsersStore } from "./store/usersStore";
-  import { onMounted, ref } from "vue";
-  // import { Cookies } from "quasar";
+import { useI18n } from 'vue-i18n'
+import router from 'src/router'
+import { onMounted, ref } from 'vue'
+import { useUsersStore } from './store/usersStore'
+// import { Cookies } from "quasar";
 
-  const leftDrawer = ref<boolean>(true);
-  const usersStore = useUsersStore();
+const leftDrawer = ref<boolean>(true)
+const usersStore = useUsersStore()
 
-  let { locale, t } = useI18n();
+const { locale, t } = useI18n()
 
-  onMounted(() => {
-    usersStore.autoLogin();
-  });
+onMounted(() => {
+  usersStore.autoLogin()
+})
 
-  // Watch browser or browser page is close
-  window.addEventListener(
-    "beforeunload",
-    () => {
-      if (usersStore.loggedUser) {
-        usersStore.closeApp();
-      }
-    },
-    false
-  );
+// Watch browser or browser page is close
+window.addEventListener(
+  'beforeunload',
+  () => {
+    if (usersStore.loggedUser)
+      usersStore.closeApp()
+  },
+  false,
+)
 
-  function menuItems() {
-    return [
-      {
-        icon: "mdi-home",
-        text: t("startPage"),
-        name: "startPage",
-        route: "/",
-        disabled: false,
-        separator: false,
-      },
-      {
-        icon: "mdi-account",
-        text: t("account"),
-        name: "account",
-        route: "/account",
-        disabled: false,
-        separator: false,
-      },
-      {
-        icon: "mdi-information",
-        text: t("about"),
-        name: "about",
-        route: "/about",
-        disabled: false,
-        separator: true,
-      },
-    ];
-  }
-
-  const links = ref([
+function menuItems() {
+  return [
     {
-      icon: "mdi-github",
-      text: "Frontend",
-      name: "",
-      link: "https://github.com/14A-A-Lyedlik-Devs/futar-frontend",
+      icon: 'mdi-home',
+      text: t('startPage'),
+      name: 'startPage',
+      route: '/',
       disabled: false,
       separator: false,
     },
     {
-      icon: "mdi-github",
-      text: "Backend",
-      name: "",
-      link: "https://github.com/14A-A-Lyedlik-Devs/futar-backend",
+      icon: 'mdi-account',
+      text: t('account'),
+      name: 'account',
+      route: '/account',
       disabled: false,
       separator: false,
     },
-  ]);
+    {
+      icon: 'mdi-information',
+      text: t('about'),
+      name: 'about',
+      route: '/about',
+      disabled: false,
+      separator: true,
+    },
+  ]
+}
 
-  function toggleLanguage() {
-    locale.value = locale.value == "hu" ? "en" : "hu";
-  }
+const links = ref([
+  {
+    icon: 'mdi-github',
+    text: 'Frontend',
+    name: '',
+    link: 'https://github.com/14A-A-Lyedlik-Devs/futar-frontend',
+    disabled: false,
+    separator: false,
+  },
+  {
+    icon: 'mdi-github',
+    text: 'Backend',
+    name: '',
+    link: 'https://github.com/14A-A-Lyedlik-Devs/futar-backend',
+    disabled: false,
+    separator: false,
+  },
+])
+
+function toggleLanguage() {
+  locale.value = locale.value === 'hu' ? 'en' : 'hu'
+}
 </script>
 
 <template>
@@ -86,13 +85,13 @@
           <q-btn dense flat icon="mdi-menu" round @click="leftDrawer = !leftDrawer" />
           <q-toolbar-title class="my-title" style="cursor: pointer" @click="router.push({ path: '/' })">
             <q-avatar>
-              <img src="./assets/Jedlik_small.png" />
+              <img src="./assets/Jedlik_small.png">
             </q-avatar>
             Futár
           </q-toolbar-title>
           <q-btn v-if="usersStore.loggedUser" round>
             <q-avatar size="38px">
-              <q-img referrerpolicy="no-referrer" :src="(usersStore.loggedUser.picture as string)" />
+              <q-img referrerpolicy="no-referrer" :src="usersStore.loggedUser.picture as string" />
             </q-avatar>
           </q-btn>
           <q-btn flat icon="mdi-comment-text-multiple" @click="toggleLanguage">
@@ -123,7 +122,7 @@
                   {{ menuItem.text }}
                 </q-item-section>
               </q-item>
-              <q-separator v-if="menuItem.separator" :key="'sep' + index" />
+              <q-separator v-if="menuItem.separator" :key="`sep${index}`" />
             </template>
             <q-item clickable :disable="usersStore.loggedUser == null" to="/qtable">
               <q-item-section avatar>
@@ -144,7 +143,7 @@
                   {{ linkItem.text }}
                 </q-item-section>
               </q-item>
-              <q-separator v-if="linkItem.separator" :key="'sep' + index" />
+              <q-separator v-if="linkItem.separator" :key="`sep${index}`" />
             </template>
           </q-list>
         </q-scroll-area>

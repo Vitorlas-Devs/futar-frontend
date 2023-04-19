@@ -3,7 +3,6 @@
   "eslint.validate": ["javascript", "typescript", "vue"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.parameterHints.enabled": true,
-  "editor.formatOnSave": true,
   "editor.minimap.enabled": false,
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": true,
@@ -11,9 +10,6 @@
   "editor.suggestSelection": "first",
   "editor.wordWrap": "on",
   "editor.parameterHints.cycle": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
   "[typescript]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -53,5 +49,10 @@
   "i18n-ally.keystyle": "nested",
   "i18n-ally.sourceLanguage": "en",
   "volar.inlayHints.eventArgumentInInlineHandlers": false,
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "prettier.enable": false,
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }

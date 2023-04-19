@@ -1,13 +1,13 @@
 <script setup lang="ts">
-  import { computed } from "vue";
-  import { useUsersStore } from "../store/usersStore";
-  import { useAppStore } from "../store/appStore";
-  import LoginDialog from "src/components/LoginDialog.vue";
+import { computed } from 'vue'
+import LoginDialog from 'src/components/LoginDialog.vue'
+import { useUsersStore } from '../store/usersStore'
+import { useAppStore } from '../store/appStore'
 
-  const usersStore = useUsersStore();
-  const appStore = useAppStore();
+const usersStore = useUsersStore()
+const appStore = useAppStore()
 
-  const anyLoggedUser = computed(() => (usersStore.getLoggedUser ? true : false));
+const anyLoggedUser = computed(() => (!!usersStore.getLoggedUser))
 </script>
 
 <template>
