@@ -12,6 +12,9 @@
     "cy:open": "npx cypress open --browser=edge",
     "cy:run": "npx cypress run"
   },
+  "simple-git-hooks": {
+    "pre-commit": "npm lint-staged"
+  },
   "lint-staged": {
     "*": "eslint --fix"
   },
