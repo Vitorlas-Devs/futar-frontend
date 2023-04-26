@@ -24,5 +24,7 @@
   "content": "Content",
   "save": "Save",
   "cancel": "Cancel",
-  "price": "Price"
+  "price": "Price",
+  "minKm": "Minimum km",
+  "maxKm": "Maximum km"
 }

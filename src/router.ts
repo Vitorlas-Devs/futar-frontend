@@ -2,7 +2,7 @@ import type { RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHistory } from 'vue-router'
 import AboutView from './views/AboutView.vue'
 import AccountView from './views/AccountView.vue'
-import QTableView from './views/QTableView.vue'
+import DíjTableView from './views/DíjTableView.vue'
 import StartPageView from './views/StartPageView.vue'
 
 const routes: Array<RouteRecordRaw> = [
@@ -17,9 +17,9 @@ const routes: Array<RouteRecordRaw> = [
     component: AccountView,
   },
   {
-    path: '/qtable',
-    name: 'qtable',
-    component: QTableView,
+    path: '/priceTable',
+    name: 'priceTable',
+    component: DíjTableView,
   },
   {
     path: '/about',
