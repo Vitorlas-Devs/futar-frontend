@@ -23,5 +23,6 @@
   "title": "Title",
   "content": "Content",
   "save": "Save",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "price": "Price"
 }

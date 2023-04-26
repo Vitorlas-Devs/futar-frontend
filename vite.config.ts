@@ -1,47 +1,47 @@
 /// <reference types="vitest" />
 
-import { defineConfig } from "vite";
-import { resolve } from "path";
-import { quasar, transformAssetUrls } from "@quasar/vite-plugin";
-import dns from "dns";
-import vue from "@vitejs/plugin-vue";
-import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
+import { resolve } from 'node:path'
+import dns from 'node:dns'
+import { defineConfig } from 'vite'
+import { quasar, transformAssetUrls } from '@quasar/vite-plugin'
+import vue from '@vitejs/plugin-vue'
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 
-dns.setDefaultResultOrder("verbatim");
+dns.setDefaultResultOrder('verbatim')
 
 export default defineConfig({
   plugins: [
     vue({ template: { transformAssetUrls } }),
-    quasar({ sassVariables: "src/assets/quasar-variables.sass" }),
+    quasar({ sassVariables: 'src/assets/quasar-variables.sass' }),
     VueI18nPlugin({
       // if you want to use Vue I18n Legacy API, you need to set `compositionOnly: false`
       // compositionOnly: false,
 
       // you need to set i18n resource including paths!
-      include: resolve(__dirname, "src/locales/**"),
+      include: resolve(__dirname, 'src/locales/**'),
     }),
   ],
   resolve: {
     alias: {
-      src: resolve(__dirname, "src"),
-      "~": resolve(__dirname, "src"),
+      'src': resolve(__dirname, 'src'),
+      '~': resolve(__dirname, 'src'),
     },
   },
   define: {
-    "process.env": {},
+    'process.env': {},
   },
 
   // https://github.com/vitest-dev/vitest
   test: {
-    include: ["test/**/*.test.ts", "src/**/*.test.ts"],
+    include: ['test/**/*.test.ts', 'src/**/*.test.ts'],
     globals: true,
-    environment: "happy-dom",
-    setupFiles: ["./test/setup.ts"],
+    environment: 'happy-dom',
+    setupFiles: ['./test/setup.ts'],
     coverage: {
-      provider: "istanbul", // or 'c8'
+      provider: 'istanbul', // or 'c8'
     },
     deps: {
-      inline: ["@vue", "@vueuse", "vue-demi"],
+      inline: ['@vue', '@vueuse', 'vue-demi'],
     },
   },
 
@@ -51,14 +51,14 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes("/node_modules/")) {
+          if (id.includes('/node_modules/')) {
             // Set the NPM package
-            const modules = ["quasar", "@quasar", "vue", "@vue"];
-            const chunk = modules.find((module) => id.includes(`/node_modules/${module}`));
-            return chunk ? `vendor-${chunk}` : "vendor";
+            const modules = ['quasar', '@quasar', 'vue', '@vue']
+            const chunk = modules.find(module => id.includes(`/node_modules/${module}`))
+            return chunk ? `vendor-${chunk}` : 'vendor'
           }
         },
       },
     },
   },
-});
+})
