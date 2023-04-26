@@ -2,16 +2,16 @@ import { defineStore } from 'pinia'
 
 interface IState {
   showLoginDialog: boolean
-  showEditPostDialog: boolean
-  showNewPostDialog: boolean
+  showEditDíjDialog: boolean
+  showNewDíjDialog: boolean
 }
 
 export const useAppStore = defineStore({
   id: 'appStore',
   state: (): IState => ({
     showLoginDialog: false,
-    showEditPostDialog: false,
-    showNewPostDialog: false,
+    showEditDíjDialog: false,
+    showNewDíjDialog: false,
   }),
   persist: {
     enabled: true,

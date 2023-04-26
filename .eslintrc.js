@@ -35,7 +35,7 @@ module.exports = {
     // 'vue/multi-word-component-names': 'off',
     // "sort-imports": ["error", { ignoreCase: true }],
     'vue/attributes-order': ['error', { alphabetical: true }],
-    // "no-console": "error",
+    'no-console': 'error',
     // "cypress/no-assigning-return-values": "error",
     // "cypress/no-unnecessary-waiting": "error",
     // "cypress/assertion-before-screenshot": "warn",

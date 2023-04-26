@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import type { QTableProps } from 'quasar'
 import { onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { usePostsStore } from '../store/postsStore'
+import { useDíjStore } from '../store/díjStore'
 import { useAppStore } from '../store/appStore'
 
-const postsStore = usePostsStore()
+const díjStore = useDíjStore()
 const appStore = useAppStore()
 
 const { t } = useI18n()
@@ -43,50 +42,41 @@ function columnsI18n(): IColumns[] {
 //   { name: "content", label: "Content", field: "content", align: "left", sortable: true },
 // ];
 
-function onRequest(props: QTableProps) {
-  if (props.pagination) {
-    const { page, rowsPerPage, sortBy, descending } = props.pagination
-    postsStore.pagination.page = page as number
-    postsStore.pagination.rowsPerPage = rowsPerPage as number
-    postsStore.pagination.sortBy = sortBy as string
-    postsStore.pagination!.descending = descending as boolean
-
-    postsStore.fetchPaginatedPosts() // get posts
-  }
-}
-
 onMounted(() => {
   // load posts on start
-  onRequest({
-    filter: postsStore.filter,
-    pagination: postsStore.pagination,
-  })
+  díjStore.getAll()
+  // print díjStore to debud console
+  console.warn('haho')
 })
 
-function editPost(): void {
-  postsStore.data = postsStore.selected[0]
-  postsStore.getPostById()
-  appStore.showEditPostDialog = true
+function editDíj(): void {
+  díjStore.data = díjStore.selected[0]
+  díjStore.getById()
+  appStore.showEditDíjDialog = true
 }
 
-function newPost(): void {
-  postsStore.data = {}
-  appStore.showNewPostDialog = true
+function newDíj(): void {
+  díjStore.data = {}
+  appStore.showNewDíjDialog = true
 }
 
-function submitEditPostDialog() {
-  postsStore.editPostById()
-  appStore.showEditPostDialog = false
+function submitEditDíjDialog() {
+  díjStore.editById()
+  appStore.showEditDíjDialog = false
 }
 
-function submitNewPostDialog() {
-  postsStore.createNewPost()
-  appStore.showNewPostDialog = false
+function submitNewDíjDialog() {
+  díjStore.create()
+  appStore.showNewDíjDialog = false
 }
 
-function resetPostDialog() {
-  appStore.showEditPostDialog = false
-  appStore.showNewPostDialog = false
+function resetDíjDialog() {
+  appStore.showEditDíjDialog = false
+  appStore.showNewDíjDialog = false
+}
+
+function haho() {
+  console.warn(díjStore.getAll().then(res => console.warn(res)))
 }
 </script>
 
@@ -94,89 +84,22 @@ function resetPostDialog() {
   <q-page>
     <div class="q-pa-md">
       <q-table
-        v-model:pagination="postsStore.pagination"
-        v-model:selected="postsStore.selected"
+        v-model:selected="díjStore.selected"
         binary-state-sort
         :columns="columnsI18n()"
         dense
-        :filter="postsStore.filter"
-        :loading="postsStore.isLoading"
-        :pagination-label="
-          (firstRowIndex, endRowIndex, totalRowsNumber) => `${firstRowIndex}-${endRowIndex}/${totalRowsNumber}`
-        "
+        :pagination="{ rowsPerPage: 10 }"
         row-key="_id"
-        :rows="postsStore.posts"
-        :rows-per-page-label="$t('rowsPerPageLabel')"
+        :rows="díjStore.dataN"
         selection="multiple"
-        :title="$t('posts')"
+        :title="$t('price')"
         wrap-cells
-        @request="onRequest"
-      >
-        <!-- Search field -->
-        <template #top-right>
-          <q-input v-model="postsStore.filter" debounce="500" dense :placeholder="$t('search')">
-            <template #append>
-              <q-icon name="search" />
-            </template>
-          </q-input>
-        </template>
-      </q-table>
-      <!-- Action buttons: -->
-      <div class="row justify-center q-ma-sm q-gutter-sm">
-        <q-btn v-show="postsStore.selected.length !== 0" color="orange" no-caps @click="postsStore.selected = []">
-          {{ postsStore.selected.length > 1 ? $t("clearSelections") : $t("clearSelection") }}
-        </q-btn>
-        <q-btn v-show="postsStore.selected.length === 0" color="green" no-caps @click="newPost()">
-          {{ $t("newPost") }}
-        </q-btn>
-        <q-btn v-show="postsStore.selected.length === 1" color="blue" no-caps @click="editPost()">
-          {{ $t("editPost") }}
-        </q-btn>
-        <q-btn v-show="postsStore.selected.length !== 0" color="red" no-caps @click="postsStore.deleteById()">
-          {{ postsStore.selected.length > 1 ? $t("deletePosts") : $t("deletePost") }}
-        </q-btn>
-      </div>
+      />
+      <q-btn color="green" no-caps @click="haho">
+        {{ $t("price") }}
+      </q-btn>
     </div>
     <!-- Edit post dialog: -->
-    <q-dialog v-model="appStore.showEditPostDialog" persistent>
-      <q-card class="q-pa-md" style="width: 60vw; min-width: 300px">
-        <q-form class="q-mx-md" @reset="resetPostDialog()" @submit="submitEditPostDialog()">
-          <div class="row">
-            <div v-if="postsStore.data" class="col-12 q-gutter-md">
-              <h4 class="text-center q-mt-lg q-mb-none">
-                {{ $t("editPost") }}
-              </h4>
-              <q-input v-model="postsStore.data.title" filled :label="$t('title')" type="text" />
-              <q-input v-model="postsStore.data.content" filled :label="$t('content')" type="textarea" />
-              <div class="row justify-center">
-                <q-btn class="q-mr-md" color="green" :label="$t('save')" no-caps type="submit" />
-                <q-btn class="q-mr-md" color="red" :label="$t('cancel')" no-caps type="reset" />
-              </div>
-            </div>
-          </div>
-        </q-form>
-      </q-card>
-    </q-dialog>
-    <!-- New post dialog: -->
-    <q-dialog v-model="appStore.showNewPostDialog" persistent>
-      <q-card class="q-pa-md" style="width: 60vw; min-width: 300px">
-        <q-form class="q-mx-md" @reset="resetPostDialog()" @submit="submitNewPostDialog()">
-          <div class="row">
-            <div v-if="postsStore.data" class="col-12 q-gutter-md">
-              <h4 class="text-center q-mt-lg q-mb-none">
-                {{ t("newPost") }}
-              </h4>
-              <q-input v-model="postsStore.data.title" filled :label="$t('title')" type="text" />
-              <q-input v-model="postsStore.data.content" filled :label="$t('content')" type="textarea" />
-              <div class="row justify-center">
-                <q-btn class="q-mr-md" color="green" :label="$t('save')" no-caps type="submit" />
-                <q-btn class="q-mr-md" color="red" :label="$t('cancel')" no-caps type="reset" />
-              </div>
-            </div>
-          </div>
-        </q-form>
-      </q-card>
-    </q-dialog>
   </q-page>
 </template>
 
