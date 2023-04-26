@@ -41,7 +41,7 @@ export const useDíjStore = defineStore('díjStore', () => {
     const { response, error } = await useAxios('/dij', { method: 'GET' }, instance)
     if (response && response.value) {
       Loading.hide()
-      state.dataN = response.value.data
+      state.dataN = response.value.data.díjak
     }
     else {
       Loading.hide()

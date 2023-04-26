@@ -24,6 +24,8 @@
   "content": "Tartalom",
   "save": "Mentés",
   "cancel": "Mégsem",
-  "price": "Díj"
+  "price": "Díj",
+  "minKm": "Minimum km",
+  "maxKm": "Maximum km"
 }
 

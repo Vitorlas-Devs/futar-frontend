@@ -3,6 +3,7 @@ import { useI18n } from 'vue-i18n'
 import router from 'src/router'
 import { onMounted, ref } from 'vue'
 import { useUsersStore } from './store/usersStore'
+
 // import { Cookies } from "quasar";
 
 const leftDrawer = ref<boolean>(true)
@@ -124,11 +125,11 @@ function toggleLanguage() {
               </q-item>
               <q-separator v-if="menuItem.separator" :key="`sep${index}`" />
             </template>
-            <q-item clickable :disable="usersStore.loggedUser == null" to="/qtable">
+            <q-item clickable :disable="usersStore.loggedUser == null" to="/priceTable">
               <q-item-section avatar>
                 <q-icon name="mdi-table" />
               </q-item-section>
-              <q-item-section>q-table</q-item-section>
+              <q-item-section>Díjak</q-item-section>
             </q-item>
             <q-separator />
           </q-list>

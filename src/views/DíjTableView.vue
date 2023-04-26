@@ -20,16 +20,23 @@ interface IColumns {
 function columnsI18n(): IColumns[] {
   const columns: IColumns[] = [
     {
-      name: 'title',
-      label: t('title'),
-      field: 'title',
+      name: 'minKm',
+      label: t('minKm'),
+      field: 'minKm',
       align: 'left',
       sortable: true,
     },
     {
-      name: 'content',
-      label: t('content'),
-      field: 'content',
+      name: 'maxKm',
+      label: t('maxKm'),
+      field: 'maxKm',
+      align: 'left',
+      sortable: true,
+    },
+    {
+      name: 'összeg',
+      label: t('price'),
+      field: 'összeg',
       align: 'left',
       sortable: true,
     },
@@ -41,13 +48,6 @@ function columnsI18n(): IColumns[] {
 //   { name: "title", label: "Title", field: "title", align: "left", sortable: true },
 //   { name: "content", label: "Content", field: "content", align: "left", sortable: true },
 // ];
-
-onMounted(() => {
-  // load posts on start
-  díjStore.getAll()
-  // print díjStore to debud console
-  console.warn('haho')
-})
 
 function editDíj(): void {
   díjStore.data = díjStore.selected[0]
@@ -76,8 +76,14 @@ function resetDíjDialog() {
 }
 
 function haho() {
-  console.warn(díjStore.getAll().then(res => console.warn(res)))
+  console.warn(díjStore.dataN)
+  console.warn(díjStore.dataN.length)
+  console.warn(díjStore.dataN[0])
 }
+
+onMounted(() => {
+  díjStore.getAll()
+})
 </script>
 
 <template>
@@ -95,9 +101,20 @@ function haho() {
         :title="$t('price')"
         wrap-cells
       />
-      <q-btn color="green" no-caps @click="haho">
-        {{ $t("price") }}
-      </q-btn>
+      <div class="row justify-center q-ma-sm q-gutter-sm">
+        <q-btn v-show="díjStore.selected.length !== 0" color="orange" no-caps @click="díjStore.selected = []">
+          {{ díjStore.selected.length > 1 ? $t("clearSelections") : $t("clearSelection") }}
+        </q-btn>
+        <q-btn color="green" no-caps @click="newDíj">
+          {{ $t("newDocument") }}
+        </q-btn>
+        <q-btn v-show="díjStore.selected.length === 1" color="blue" no-caps @click="editDíj">
+          {{ $t("editDocument") }}
+        </q-btn>
+        <q-btn v-show="díjStore.selected.length !== 0" color="red" no-caps @click="díjStore.deleteById()">
+          {{ díjStore.selected.length > 1 ? $t("deleteSelectedDocuments") : $t("deleteSelectedDocument") }}
+        </q-btn>
+      </div>
     </div>
     <!-- Edit post dialog: -->
   </q-page>
